@@ -20,4 +20,4 @@
 - 문제점 개요서 작성 및 난독화 도구 구현 방법 소개
 - [2주차 발표 영상](https://youtu.be/md-ZnEEVKQ0)
 - 문제점 개요서, 발표 자료
-- [2주차 PR]()
+- [2주차 PR](https://github.com/Joinwoo/Code-obfuscation-tool/pull/7)
