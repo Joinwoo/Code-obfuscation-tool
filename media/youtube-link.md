@@ -1,1 +1,2 @@
 - [Week01](https://youtu.be/dIfNQikINm8)
+- [Week02](https://youtu.be/md-ZnEEVKQ0)
