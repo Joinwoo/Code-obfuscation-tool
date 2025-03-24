@@ -144,9 +144,9 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
     }
 
     @Override public void exitWhile_stmt(MiniCParser.While_stmtContext ctx) {
-        String result = DummyCode.genRandomFlowControl() + " else{ ";
+        String result = DummyCode.genRandomFlowControl() + " else { ";
         result += "while(" + cTree.get(ctx.expr()) + ")" + cTree.get(ctx.stmt());
-        cTree.put(ctx, result + " }");
+        cTree.put(ctx, result + " } ");
     }
 
     @Override public void enterCompound_stmt(MiniCParser.Compound_stmtContext ctx) {
@@ -185,14 +185,14 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
     @Override public void exitIf_stmt(MiniCParser.If_stmtContext ctx) {
         String expr = cTree.get(ctx.expr());
         String stmt1 = cTree.get(ctx.stmt(0));
-        String result = DummyCode.genRandomFlowControl() + " else{ ";
+        String result = DummyCode.genRandomFlowControl() + " else { ";
 
         if(ctx.getChildCount() == 5)
             result += "if(" + expr + ")" + stmt1;
         else
             result += "if(" + expr + ")" + stmt1 + "else" + cTree.get(ctx.stmt(1));
 
-        cTree.put(ctx, result + " }");
+        cTree.put(ctx, result + " } ");
     }
 
     @Override public void exitReturn_stmt(MiniCParser.Return_stmtContext ctx) {
