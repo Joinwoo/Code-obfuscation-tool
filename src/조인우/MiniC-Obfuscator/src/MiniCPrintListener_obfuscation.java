@@ -262,4 +262,3 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         }
     }
 }
-
