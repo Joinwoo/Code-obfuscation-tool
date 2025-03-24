@@ -28,7 +28,9 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         StringBuilder program = new StringBuilder();
         for (int i = 0; i < ctx.decl().size(); i++)
             program.append(cTree.get(ctx.decl(i)));
-        output = program.toString();
+
+        output = DummyCode.getDummyVarDecl();
+        output += program.toString();
     }
 
     @Override public void exitDecl(MiniCParser.DeclContext ctx) {
@@ -123,15 +125,15 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         String result = "";
 
         if(ctx.expr_stmt() != null)
-            result = cTree.get(ctx.expr_stmt());
+            result += cTree.get(ctx.expr_stmt());
         else if(ctx.compound_stmt() != null)
-            result = cTree.get(ctx.compound_stmt());
+            result += cTree.get(ctx.compound_stmt());
         else if(ctx.if_stmt() != null)
-            result = cTree.get(ctx.if_stmt());
+            result += cTree.get(ctx.if_stmt());
         else if(ctx.while_stmt() != null)
-            result = cTree.get(ctx.while_stmt());
+            result += cTree.get(ctx.while_stmt());
         else
-            result = cTree.get(ctx.return_stmt());
+            result += cTree.get(ctx.return_stmt());
 
         cTree.put(ctx, result);
     }
@@ -142,8 +144,9 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
     }
 
     @Override public void exitWhile_stmt(MiniCParser.While_stmtContext ctx) {
-        String result = "while(" + cTree.get(ctx.expr()) + ")" + cTree.get(ctx.stmt());
-        cTree.put(ctx, result);
+        String result = DummyCode.genRandomFlowControl() + " else{ ";
+        result += "while(" + cTree.get(ctx.expr()) + ")" + cTree.get(ctx.stmt());
+        cTree.put(ctx, result + " }");
     }
 
     @Override public void enterCompound_stmt(MiniCParser.Compound_stmtContext ctx) {
@@ -182,14 +185,14 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
     @Override public void exitIf_stmt(MiniCParser.If_stmtContext ctx) {
         String expr = cTree.get(ctx.expr());
         String stmt1 = cTree.get(ctx.stmt(0));
-        String result = "";
+        String result = DummyCode.genRandomFlowControl() + " else{ ";
 
         if(ctx.getChildCount() == 5)
-            result = "if(" + expr + ")" + stmt1;
+            result += "if(" + expr + ")" + stmt1;
         else
-            result = "if(" + expr + ")" + stmt1 + "else" + cTree.get(ctx.stmt(1));
+            result += "if(" + expr + ")" + stmt1 + "else" + cTree.get(ctx.stmt(1));
 
-        cTree.put(ctx, result);
+        cTree.put(ctx, result + " }");
     }
 
     @Override public void exitReturn_stmt(MiniCParser.Return_stmtContext ctx) {
