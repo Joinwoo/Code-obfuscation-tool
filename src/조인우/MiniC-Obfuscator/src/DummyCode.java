@@ -1,16 +1,16 @@
 public class DummyCode {
     private static final String dummyVarDecl =
             "int aBcDeFgHiJk=5;" +
-            "int lMnOpQrStUv=2;" +
-            "int XyZaBcDeFgH=8;" +
-            "int qRsTuVwXyZ=4;" +
-            "int DeFgHiJkLmN=10;" +
-            "int OpQrStUvWxY=3;" +
-            "int aBcDeFgHiJk2=7;" +
-            "int lMnOpQrStUv2=1<<5;" +
-            "int dUmMyVaRiAbL=2;" +
-            "int RaNdOmVaLuE1=0x12345678;" +
-            "int RaNdOmVaLuE2=0x000000F0;";
+                    "int lMnOpQrStUv=2;" +
+                    "int XyZaBcDeFgH=8;" +
+                    "int qRsTuVwXyZ=4;" +
+                    "int DeFgHiJkLmN=10;" +
+                    "int OpQrStUvWxY=3;" +
+                    "int aBcDeFgHiJk2=7;" +
+                    "int lMnOpQrStUv2=1<<5;" +
+                    "int dUmMyVaRiAbL=2;" +
+                    "int RaNdOmVaLuE1=0x12345678;" +
+                    "int RaNdOmVaLuE2=0x000000F0;";
 
     private static final String[] falseConds = {
             "(lMnOpQrStUv+XyZaBcDeFgH)<(qRsTuVwXyZ-DeFgHiJkLmN)",
@@ -30,7 +30,7 @@ public class DummyCode {
             "((((RaNdOmVaLuE1>>4)&0xFFF)^0xABC)<(XyZaBcDeFgH*dUmMyVaRiAbL))"
     };
 
-    private static final String[] dummyCodes={
+    private static final String[] dummyCodes = {
             "int dRbFgYzPqLs=0;while(dRbFgYzPqLs<1000){dRbFgYzPqLs+=5;if(dRbFgYzPqLs%3==0){dRbFgYzPqLs*=2;}else{dRbFgYzPqLs-=3;}}",
             "int rTzJxKiCwLo=1;switch(rTzJxKiCwLo){case 1:rTzJxKiCwLo+=5;break;case 2:rTzJxKiCwLo-=2;break;default:rTzJxKiCwLo*=3;}",
             "int mNlKiVwQpTf=10;do{mNlKiVwQpTf*=2;if(mNlKiVwQpTf%3==0){mNlKiVwQpTf+=5;}else{mNlKiVwQpTf-=7;}}while(mNlKiVwQpTf<1000);",

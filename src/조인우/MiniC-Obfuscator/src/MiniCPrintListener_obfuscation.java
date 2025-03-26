@@ -161,11 +161,6 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
     }
 
     @Override
-    public void enterCompound_stmt(MiniCParser.Compound_stmtContext ctx) {
-
-    }
-
-    @Override
     public void exitCompound_stmt(MiniCParser.Compound_stmtContext ctx) {
         StringBuilder result = new StringBuilder();
 
