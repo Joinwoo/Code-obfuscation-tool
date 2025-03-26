@@ -11,15 +11,25 @@ public class DummyCode {
             "int RaNdOmVaLuE1 = 0x12345678; " +
             "int RaNdOmVaLuE2 = 0x000000F0; ";
 
-    private static final String falseCond[] = {
-        "aBcDeFgHiJk == lMnOpQrStUv",
-                "XyZaBcDeFgH == qRsTuVwXyZ",
-                "DeFgHiJkLmN == OpQrStUvWxY",
-                "aBcDeFgHiJk2 == lMnOpQrStUv2",
-                "aBcDeFgHiJk == XyZaBcDeFgH",
-                "qRsTuVwXyZ == RaNdOmVaLuE1"
+    private static final String[] falseConds = {
+            "(lMnOpQrStUv + XyZaBcDeFgH) < (qRsTuVwXyZ - DeFgHiJkLmN)",
+            "(OpQrStUvWxY * aBcDeFgHiJk2) > (lMnOpQrStUv2 / dUmMyVaRiAbL)",
+            "((RaNdOmVaLuE1 & RaNdOmVaLuE2) ^ 0xF0) == 0x12345678",
+            "((lMnOpQrStUv2 >> 2) - (aBcDeFgHiJk2 * 2)) == (RaNdOmVaLuE2 | dUmMyVaRiAbL)",
+            "(((qRsTuVwXyZ + OpQrStUvWxY) * 3) & 0xFF) == (lMnOpQrStUv2 >> 3)",
+            "(((RaNdOmVaLuE1 >> 4) & 0xFFF) ^ 0xABC) < (XyZaBcDeFgH * dUmMyVaRiAbL)"
     };
-    private static final String dummyCodes[] = {
+
+    private static final String[] trueCodns = {
+            "((lMnOpQrStUv + XyZaBcDeFgH) > (qRsTuVwXyZ - DeFgHiJkLmN))",
+            "((OpQrStUvWxY * aBcDeFgHiJk2) > (lMnOpQrStUv2 / dUmMyVaRiAbL))",
+            "(((RaNdOmVaLuE1 & RaNdOmVaLuE2) ^ 0xF0) == 0x12345678)",
+            "(((lMnOpQrStUv2 >> 2) - (aBcDeFgHiJk2 * 2)) == (RaNdOmVaLuE2 | dUmMyVaRiAbL))",
+            "((((qRsTuVwXyZ + OpQrStUvWxY) * 3) & 0xFF) == (lMnOpQrStUv2 >> 3))",
+            "((((RaNdOmVaLuE1 >> 4) & 0xFFF) ^ 0xABC) < (XyZaBcDeFgH * dUmMyVaRiAbL))"
+    };
+
+    private static final String[] dummyCodes = {
             "int dRbFgYzPqLs = 0; while (dRbFgYzPqLs < 1000) { dRbFgYzPqLs += 5; if (dRbFgYzPqLs % 3 == 0) { dRbFgYzPqLs *= 2; } else { dRbFgYzPqLs -= 3; } }",
 
             "int rTzJxKiCwLo = 1; switch (rTzJxKiCwLo) { case 1: rTzJxKiCwLo += 5; break; case 2: rTzJxKiCwLo -= 2; break; default: rTzJxKiCwLo *= 3; }",
@@ -40,15 +50,24 @@ public class DummyCode {
 
             "int DeFgHiJkLmN = 10; unsigned int RvTzNpIqKs = 0xDEADBEEF; DeFgHiJkLmN = RvTzNpIqKs & 0xFF; if (DeFgHiJkLmN % 2 == 0) { DeFgHiJkLmN *= 3; } else { DeFgHiJkLmN /= 2; }"
     };
+
     public static String getDummyVarDecl() {
         return dummyVarDecl;
     }
+
     private static String getRandomFalseCond() {
-        return falseCond[(int)(Math.random() * falseCond.length)];
+        return falseConds[(int) (Math.random() * falseConds.length)];
+    }
+
+    public static String getRandomTrueCond() {
+        double ran = Math.random();
+        String trueCond = trueCodns[(int) (Math.random() * trueCodns.length)];
+
+        return "&&" + trueCond;
     }
 
     private static String getRandomDummyCode() {
-        return dummyCodes[(int)(Math.random() * dummyCodes.length)];
+        return dummyCodes[(int) (Math.random() * dummyCodes.length)];
     }
 
     public static String genRandomFlowControl() {

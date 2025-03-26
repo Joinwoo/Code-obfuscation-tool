@@ -1,5 +1,6 @@
 // Generated from C:/Users/user/Desktop/졸업프로젝트/Code-obfuscation-tool/src/조인우/MiniC-Obfuscator/MiniC.g4 by ANTLR 4.13.2
 package generated;
+ 
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -41,7 +42,7 @@ public class MiniCParser extends Parser {
 		return new String[] {
 			null, "';'", "'='", "'['", "']'", "'('", "')'", "','", "'{'", "'}'", 
 			"'-'", "'+'", "'--'", "'++'", "'*'", "'/'", "'%'", "'<'", "'>'", "'!'", 
-			"'void'", "'int'", "'while'", "'if'", "'else'", "'return'", "'or'", "'and'", 
+			"'void'", "'int'", "'while'", "'if'", "'else'", "'return'", "'||'", "'&&'", 
 			"'<='", "'>='", "'=='", "'!='"
 		};
 	}

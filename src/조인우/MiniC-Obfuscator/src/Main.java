@@ -1,15 +1,18 @@
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import generated.MiniCLexer;
+import generated.MiniCParser;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import generated.*;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-public class Main{
-    public static void main(String[] args) throws Exception{
+public class Main {
+    public static void main(String[] args) throws Exception {
         CharStream code = CharStreams.fromFileName("./src/test.c");
         MiniCLexer lexer = new MiniCLexer(code);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-        try{
+        try {
             MiniCParser parser = new MiniCParser(tokens);
             ParseTree tree = parser.program();
 
@@ -17,7 +20,7 @@ public class Main{
             walker.walk(new MiniCPrintListener_obfuscation(), tree);
 
             System.out.println(MiniCPrintListener_obfuscation.getOutput());
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println("Error");
         }
     }
