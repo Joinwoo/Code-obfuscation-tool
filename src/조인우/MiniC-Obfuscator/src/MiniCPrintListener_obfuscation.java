@@ -6,8 +6,8 @@ import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import java.util.HashMap;
 
 public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements ParseTreeListener {
-    private static String output = "";
     private static final HashMap<String, String> nameMap = new HashMap<>();
+    private static String output = "";
     ParseTreeProperty<String> cTree = new ParseTreeProperty<>();
 
     private static void assignObfuscatedName(String name) {
@@ -59,11 +59,11 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         String obfuscatedName = getObfuscatedName(IDENT);
 
         if (ctx.getChildCount() == 3)
-            result = type_spec + " " + obfuscatedName + "; ";
+            result = type_spec + " " + obfuscatedName + ";";
         else if (ctx.getChildCount() == 5)
-            result = type_spec + " " + obfuscatedName + " = " + ctx.LITERAL().getText() + "; ";
+            result = type_spec + " " + obfuscatedName + "=" + ctx.LITERAL().getText() + ";";
         else
-            result = type_spec + " " + obfuscatedName + "[" + ctx.LITERAL().getText() + "]; ";
+            result = type_spec + " " + obfuscatedName + "[" + ctx.LITERAL().getText() + "];";
 
         cTree.put(ctx, result);
     }
@@ -107,7 +107,7 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         else {
             String params = cTree.get(ctx.param(0));
             for (int i = 1; i < count; i += 2) {
-                params += ", " + cTree.get(ctx.param(i));
+                params += "," + cTree.get(ctx.param(i));
             }
             cTree.put(ctx, params);
         }
@@ -149,15 +149,15 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
 
     @Override
     public void exitExpr_stmt(MiniCParser.Expr_stmtContext ctx) {
-        String result = cTree.get(ctx.expr()) + "; ";
+        String result = cTree.get(ctx.expr()) + ";";
         cTree.put(ctx, result);
     }
 
     @Override
     public void exitWhile_stmt(MiniCParser.While_stmtContext ctx) {
-        String result = DummyCode.genRandomFlowControl() + " else { ";
+        String result = DummyCode.genRandomFlowControl() + "else{";
         result += "while(" + cTree.get(ctx.expr()) + ")" + cTree.get(ctx.stmt());
-        cTree.put(ctx, result + " } ");
+        cTree.put(ctx, result + "}");
     }
 
     @Override
@@ -174,7 +174,7 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         for (int i = 0; i < ctx.stmt().size(); i++)
             result.append(cTree.get(ctx.stmt(i)));
 
-        cTree.put(ctx, " " + "{ " + result + "} ");
+        cTree.put(ctx, "{" + result + "}");
     }
 
     @Override
@@ -187,11 +187,11 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         String obfuscatedName = getObfuscatedName(IDENT);
 
         if (ctx.getChildCount() == 3)
-            result = type_spec + " " + obfuscatedName + "; ";
+            result = type_spec + " " + obfuscatedName + ";";
         else if (ctx.getChildCount() == 5)
-            result = type_spec + " " + obfuscatedName + " = " + ctx.LITERAL().getText() + "; ";
+            result = type_spec + " " + obfuscatedName + "=" + ctx.LITERAL().getText() + ";";
         else
-            result = type_spec + " " + obfuscatedName + "[" + ctx.LITERAL().getText() + "]; ";
+            result = type_spec + " " + obfuscatedName + "[" + ctx.LITERAL().getText() + "];";
 
 
         cTree.put(ctx, result);
@@ -201,14 +201,14 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
     public void exitIf_stmt(MiniCParser.If_stmtContext ctx) {
         String expr = cTree.get(ctx.expr());
         String stmt1 = cTree.get(ctx.stmt(0));
-        String result = DummyCode.genRandomFlowControl() + " else { ";
+        String result = DummyCode.genRandomFlowControl() + "else{";
 
         if (ctx.getChildCount() == 5)
             result += "if(" + expr + ")" + stmt1;
         else
             result += "if(" + expr + ")" + stmt1 + "else" + cTree.get(ctx.stmt(1));
 
-        cTree.put(ctx, result + " } ");
+        cTree.put(ctx, result + "}");
     }
 
     @Override
@@ -216,9 +216,9 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         String result = "";
 
         if (ctx.getChildCount() == 2)
-            result = "return; ";
+            result = "return;";
         else
-            result = "return " + cTree.get(ctx.expr()) + "; ";
+            result = "return " + cTree.get(ctx.expr()) + ";";
 
         cTree.put(ctx, result);
     }
@@ -242,7 +242,7 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         } else if (childCount == 2) {
             if (ctx.getChild(0).getText().equals("!")) {
                 String trueCond = DummyCode.getRandomTrueCond();
-                result = "(!" + cTree.get(ctx.expr(0)) + ")" +trueCond;
+                result = "(!" + cTree.get(ctx.expr(0)) + ")" + trueCond;
             } else result = ctx.getChild(0).getText() + cTree.get(ctx.expr(0));
         } else if (childCount == 3) {
             if (ctx.getChild(0).getText().equals("("))
@@ -257,9 +257,9 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
                     || ctx.getChild(1).getText().equals(">")
             ) {
                 String trueCond = DummyCode.getRandomTrueCond();
-                result = "(" + cTree.get(ctx.expr(0)) + ctx.getChild(1).getText() + cTree.get(ctx.expr(1)) + ")"+ trueCond;
+                result = "(" + cTree.get(ctx.expr(0)) + ctx.getChild(1).getText() + cTree.get(ctx.expr(1)) + ")" + trueCond;
             } else {
-                result = cTree.get(ctx.expr(0)) + " " + ctx.getChild(1).getText() + " " + cTree.get(ctx.expr(1));
+                result = cTree.get(ctx.expr(0)) + ctx.getChild(1).getText() + cTree.get(ctx.expr(1));
             }
         } else if (childCount == 4) {
             if (ctx.getChild(1).getText().equals("("))
@@ -267,7 +267,7 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
             else
                 result = obfuscatedName + "[" + cTree.get(ctx.expr(0)) + "]";
         } else {
-            result = obfuscatedName + "[" + cTree.get(ctx.expr(0)) + "] = " + cTree.get(ctx.expr(1));
+            result = obfuscatedName + "[" + cTree.get(ctx.expr(0)) + "]=" + cTree.get(ctx.expr(1));
         }
 
         cTree.put(ctx, result);
@@ -282,7 +282,7 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         else {
             String args = cTree.get(ctx.expr(0));
             for (int i = 1; i < count; i += 2) {
-                args += ", " + cTree.get(ctx.expr(i));
+                args += "," + cTree.get(ctx.expr(i));
             }
             cTree.put(ctx, args);
         }
