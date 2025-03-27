@@ -21,3 +21,10 @@
 - [2주차 발표 영상](https://youtu.be/md-ZnEEVKQ0)
 - 문제점 개요서, 발표 자료
 - [2주차 PR](https://github.com/Joinwoo/Code-obfuscation-tool/pull/7)
+
+### 3주차 활동
+
+- 브레인스토밍 결과 작성 및 난독화
+- [3주차 발표 영상]
+- 브레인스토밍 결과, 발표 자료
+- [3주차 PR]
