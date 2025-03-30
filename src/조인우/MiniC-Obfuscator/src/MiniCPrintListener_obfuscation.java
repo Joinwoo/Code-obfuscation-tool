@@ -243,7 +243,7 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
             if (ctx.getChild(0).getText().equals("("))
                 result = "(" + cTree.get(ctx.expr(0)) + ")";
             else if (ctx.getChild(1).getText().equals("="))
-                result = obfuscatedName + " = " + cTree.get(ctx.expr(0));
+                result = obfuscatedName + "=" + cTree.get(ctx.expr(0));
             else if (ctx.getChild(1).getText().equals("==")
                     || ctx.getChild(1).getText().equals("!=")
                     || ctx.getChild(1).getText().equals("<=")
