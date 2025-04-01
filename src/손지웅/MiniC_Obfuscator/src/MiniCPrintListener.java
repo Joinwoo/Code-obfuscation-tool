@@ -12,17 +12,74 @@ import java.util.regex.Pattern;
 
 public class MiniCPrintListener extends MiniCBaseListener implements ParseTreeListener {
     private static String output = "";
+    private final java.util.List<String> junkStrings = loadJunkStrings(); // 삽입할 문자열 리스트
     ParseTreeProperty<String> cTree = new ParseTreeProperty<>();
     private final Map<String, String> varNameMap = new HashMap<>();
 
     public static String getOutput() {
         return output;
     }
-
+    private java.util.List<String> loadJunkStrings() { // 파일의 문자열을 읽어와 주석으로 추가하는 함수 구현.
+        java.util.List<String> chunks = new java.util.ArrayList<>();
+        try {
+            String content = java.nio.file.Files.readString(java.nio.file.Paths.get("./src/text.txt")).trim();
+            if (content.isEmpty()) {
+                // 파일이 비어 있으면 랜덤 문자열 여러 개 생성
+                for (int i = 0; i < 100; i++) {
+                    chunks.add(generateRandomAlpha(5));
+                }
+            } else {
+                // 내용을 일정 길이로 쪼개서 사용
+                int i = 0;
+                while (i < content.length()) {
+                    int len = Math.min(5, content.length() - i);
+                    chunks.add(content.substring(i, i + len));
+                    i += len;
+                }
+            }
+        } catch (Exception e) {
+            // 파일 읽기 실패 시 fallback
+            for (int i = 0; i < 100; i++) {
+                chunks.add(generateRandomAlpha(5));
+            }
+        }
+        return chunks;
+    }
     private String getRandomVarName(String original) {
         return varNameMap.computeIfAbsent(original,
                 k -> "var_" + UUID.randomUUID().toString().replace("-", "").substring(0, 8));
     }
+
+    private String insertJunkComments(String code) {
+        String[] tokens = code.split("(?<=\\W)|(?=\\W)");
+        StringBuilder result = new StringBuilder();
+        Random rand = new Random();
+        for (String token : tokens) {
+            if (!token.trim().isEmpty()) {
+                result.append(token);
+                // 난수로 길이 결정 (예: 3 ~ 8자)
+                int len = rand.nextInt(6) + 3;
+                String junk = junkStrings.get(rand.nextInt(junkStrings.size()));
+                // 길이 초과 시 잘라서 사용
+                junk = junk.length() > len ? junk.substring(0, len) : junk;
+                result.append("/*" + junk + "*/");
+            }
+        }
+        return result.toString();
+    }
+
+
+    private String generateRandomAlpha(int length) {
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        StringBuilder sb = new StringBuilder();
+        Random rand = new Random();
+        for (int i = 0; i < length; i++) {
+            sb.append(alphabet.charAt(rand.nextInt(alphabet.length())));
+        }
+        return sb.toString();
+    }
+
+
 
     // 리터럴 난독화: 숫자를 무의미한 수식으로 변환
     private String obfuscateLiterals(String text) {
@@ -67,6 +124,8 @@ public class MiniCPrintListener extends MiniCBaseListener implements ParseTreeLi
         if (ctx.IDENT() != null) {
             String newName = getRandomVarName(ctx.IDENT().getText());
             String text = ctx.getText().replace(ctx.IDENT().getText(), newName);
+            text = obfuscateLiterals(text);
+            text = insertJunkComments(text);
             cTree.put(ctx, obfuscateLiterals(text).replaceAll("\\s+", " "));
         }
     }
@@ -99,6 +158,8 @@ public class MiniCPrintListener extends MiniCBaseListener implements ParseTreeLi
         if (ctx.IDENT() != null) {
             String newName = getRandomVarName(ctx.IDENT().getText());
             String text = ctx.getText().replace(ctx.IDENT().getText(), newName);
+            text = obfuscateLiterals(text);
+            text = insertJunkComments(text);
             cTree.put(ctx, obfuscateLiterals(text).replaceAll("\\s+", " "));
         }
     }
@@ -108,6 +169,8 @@ public class MiniCPrintListener extends MiniCBaseListener implements ParseTreeLi
         if (ctx.IDENT() != null) {
             String newName = getRandomVarName(ctx.IDENT().getText());
             String text = ctx.getText().replace(ctx.IDENT().getText(), newName);
+            text = obfuscateLiterals(text);
+            text = insertJunkComments(text);
             cTree.put(ctx, obfuscateLiterals(text).replaceAll("\\s+", " "));
         } else {
             cTree.put(ctx, obfuscateLiterals(ctx.getText()).replaceAll("\\s+", " "));
@@ -116,9 +179,10 @@ public class MiniCPrintListener extends MiniCBaseListener implements ParseTreeLi
 
     @Override
     public void exitExpr_stmt(MiniCParser.Expr_stmtContext ctx) {
-        cTree.put(ctx, obfuscateLiterals(ctx.getText()).replaceAll("\\s+", " "));
+        String text = obfuscateLiterals(ctx.getText());
+        text = insertJunkComments(text); //주석 기반 쓰레기 삽입
+        cTree.put(ctx, text);
     }
-
     @Override
     public void exitIf_stmt(MiniCParser.If_stmtContext ctx) {
         String cond = ctx.expr().getText();
@@ -141,7 +205,9 @@ public class MiniCPrintListener extends MiniCBaseListener implements ParseTreeLi
 
     @Override
     public void exitReturn_stmt(MiniCParser.Return_stmtContext ctx) {
-        cTree.put(ctx, obfuscateLiterals(ctx.getText()).replaceAll("\\s+", " "));
+        String text = obfuscateLiterals(ctx.getText());
+        text = insertJunkComments(text);  //주석 난독화 추가
+        cTree.put(ctx, text);
     }
 
     @Override
@@ -174,7 +240,7 @@ public class MiniCPrintListener extends MiniCBaseListener implements ParseTreeLi
 
     @Override
     public void exitStmt(MiniCParser.StmtContext ctx) {
-        // ✅ 이미 while_stmt에서 조립했을 가능성이 있으니 get 먼저 확인
+        //이미 while_stmt에서 조립했을 가능성이 있으니 get 먼저 확인
         if (cTree.get(ctx) != null) return;
 
         if (ctx.while_stmt() != null) {
@@ -196,3 +262,4 @@ public class MiniCPrintListener extends MiniCBaseListener implements ParseTreeLi
         cTree.put(ctx, ctx.getText());
     }
 }
+
