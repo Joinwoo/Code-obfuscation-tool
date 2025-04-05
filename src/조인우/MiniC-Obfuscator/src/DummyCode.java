@@ -21,7 +21,7 @@ public class DummyCode {
             "(((RaNdOmVaLuE1>>4)&0xFFF)^0xABC)<(XyZaBcDeFgH*dUmMyVaRiAbL)"
     };
 
-    private static final String[] trueCodns = {
+    private static final String[] trueConds = {
             "((lMnOpQrStUv+XyZaBcDeFgH)>(qRsTuVwXyZ-DeFgHiJkLmN))",
             "((OpQrStUvWxY*aBcDeFgHiJk2)>(lMnOpQrStUv2/dUmMyVaRiAbL))",
             "(((RaNdOmVaLuE1&RaNdOmVaLuE2)^0xF0)==0x12345678)",
@@ -54,7 +54,7 @@ public class DummyCode {
 
     public static String getRandomTrueCond() {
         double ran = Math.random();
-        String trueCond = trueCodns[(int) (Math.random() * trueCodns.length)];
+        String trueCond = trueConds[(int) (Math.random() * trueConds.length)];
 
         return "&&" + trueCond;
     }
