@@ -37,9 +37,9 @@
 - [4주차 PR](https://github.com/Joinwoo/Code-obfuscation-tool/pull/13)
 
 
-### 5주차 활동
+### 5-6주차 활동
 
 - 유스케이스 명세서 작성, 발표 자료 및 영상 제작
-- [5주차 발표 영상](https://youtu.be/dQaVNQZYGDw)
+- [5-6주차 발표 영상](https://youtu.be/dQaVNQZYGDw)
 - 문제 정의서, 발표 자료
-- [5주차 PR](https://github.com/Joinwoo/Code-obfuscation-tool/pull/14)
+- [5-6주차 PR](https://github.com/Joinwoo/Code-obfuscation-tool/pull/14)
