@@ -6,7 +6,7 @@ import generated.*;
 public class Main {
     public static void main(String[] args) {
         try {
-            CharStream code = CharStreams.fromFileName("./src/test.c");
+            CharStream code = CharStreams.fromFileName("/Users/sonjiwoong/Code-obfuscation-tool/src/손지웅/MiniC_Obfuscator/src/test.c");
 
             MiniCLexer lexer = new MiniCLexer(code);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
