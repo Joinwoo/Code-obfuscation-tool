@@ -43,3 +43,11 @@
 - [6주차 발표 영상](https://youtu.be/dQaVNQZYGDw)
 - 문제 정의서, 발표 자료
 - [6주차 PR](https://github.com/Joinwoo/Code-obfuscation-tool/pull/14)
+
+
+### 8주차 활동
+
+- 시퀸스다이어그램 명세서 작성, 발표 자료 및 영상 제작
+- [8주차 발표 영상](https://youtu.be/Jh1WUOp1jB0)
+- 문제 정의서, 발표 자료
+- [8주차 PR]
