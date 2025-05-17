@@ -51,3 +51,10 @@
 - [8주차 발표 영상](https://youtu.be/Jh1WUOp1jB0)
 - 문제 정의서, 발표 자료
 - [8주차 PR](https://github.com/Joinwoo/Code-obfuscation-tool/pull/15)
+
+### 11주차 활동
+
+- 테스트케이스 명세서 작성, 발표 자료 및 영상 제작
+- [11주차 발표 영상](https://youtu.be/6FkMyCl29J0)
+- 테스트케이스 명세서, 발표 자료
+- [11주차 PR]()
