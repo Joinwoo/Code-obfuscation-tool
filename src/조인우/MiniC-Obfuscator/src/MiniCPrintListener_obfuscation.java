@@ -132,7 +132,9 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
     @Override
     public void exitStmt(MiniCParser.StmtContext ctx) {
         String result = "";
+        String randomComment = DummyCode.getRandomMisleadingComment();
 
+        result += randomComment + " ";
         if (ctx.expr_stmt() != null)
             result += cTree.get(ctx.expr_stmt());
         else if (ctx.compound_stmt() != null)
@@ -225,8 +227,13 @@ public class MiniCPrintListener_obfuscation extends MiniCBaseListener implements
         String obfuscatedName = "";
 
         if (ctx.IDENT() != null) {
-            assignObfuscatedName(ctx.IDENT().getText());
-            obfuscatedName = getObfuscatedName(ctx.IDENT().getText());
+            String IDENT = ctx.IDENT().getText();
+            if(IDENT.equals("printf")) obfuscatedName = "printf";
+            else{
+                assignObfuscatedName(IDENT);
+                obfuscatedName = getObfuscatedName(IDENT);
+            }
+
         }
 
         if (childCount == 1) {

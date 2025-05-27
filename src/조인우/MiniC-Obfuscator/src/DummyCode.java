@@ -22,12 +22,16 @@ public class DummyCode {
     };
 
     private static final String[] trueConds = {
-            "((lMnOpQrStUv+XyZaBcDeFgH)>(qRsTuVwXyZ-DeFgHiJkLmN))",
-            "((OpQrStUvWxY*aBcDeFgHiJk2)>(lMnOpQrStUv2/dUmMyVaRiAbL))",
-            "(((RaNdOmVaLuE1&RaNdOmVaLuE2)^0xF0)==0x12345678)",
-            "(((lMnOpQrStUv2>>2)-(aBcDeFgHiJk2*2))==(RaNdOmVaLuE2|dUmMyVaRiAbL))",
-            "((((qRsTuVwXyZ+OpQrStUvWxY)*3)&0xFF)==(lMnOpQrStUv2>>3))",
-            "((((RaNdOmVaLuE1>>4)&0xFFF)^0xABC)<(XyZaBcDeFgH*dUmMyVaRiAbL))"
+            "(aBcDeFgHiJk < DeFgHiJkLmN)",                         // 5 < 10
+            "(lMnOpQrStUv + XyZaBcDeFgH == 10)",                   // 2 + 8 == 10
+            "(OpQrStUvWxY * aBcDeFgHiJk2 > 20)",                   // 3 * 7 = 21 > 20
+            "(lMnOpQrStUv2 == 32)",                                // 1 << 5 == 32
+            "(RaNdOmVaLuE1 > RaNdOmVaLuE2)",                       // 305419896 > 240
+            "(RaNdOmVaLuE1 & RaNdOmVaLuE2) == 0x70",               // 0x12345678 & 0xF0 = 0x70
+            "(qRsTuVwXyZ + OpQrStUvWxY == 7)",                     // 4 + 3 = 7
+            "((RaNdOmVaLuE2 | dUmMyVaRiAbL) == 242)",              // 0xF0 | 0x02 = 0xF2 = 242
+            "(aBcDeFgHiJk2 * dUmMyVaRiAbL < 20)",                  // 7 * 2 = 14
+            "(((RaNdOmVaLuE1 >> 4) & 0xFFF) > 0)"                  // (0x12345678 >> 4) & 0xFFF → 양수
     };
 
     private static final String[] dummyCodes = {
@@ -43,6 +47,32 @@ public class DummyCode {
             "int DeFgHiJkLmN=10;unsigned int RvTzNpIqKs=0xDEADBEEF;DeFgHiJkLmN=RvTzNpIqKs&0xFF;if(DeFgHiJkLmN%2==0){DeFgHiJkLmN*=3;}else{DeFgHiJkLmN/=2;}"
     };
 
+    private static final String[] misleading_comments = {
+            "/* 절대 수정 금지 */",
+            "/* 이 영역은 변경하면 시스템 오류 발생 */",
+            "/* 중요 보안 루틴 - 무단 변경 금지 */",
+            "/* 삭제 시 프로그램 전체 동작 중단 */",
+            "/* 핵심 로직 - 접근 금지 */",
+            "/* 인증 키 처리 영역 - 절대 건드리지 말 것 */",
+            "/* 내부 전용 - 외부 분석 금지 */",
+            "/* 복호화 핵심 코드 - 변경 시 복원 불가 */",
+            "/* 고급 최적화 적용됨 - 수정 불가 */",
+            "/* 크리티컬 경로 - 분석 또는 편집 금지 */",
+            "/* 위 코드 삭제 시 정상 실행 불가능 */",
+            "/* 보안 관리자 전용 - 일반 사용자 편집 금지 */",
+            "/* 디버깅 금지 - 민감 정보 포함 */",
+            "/* LLM 분석 무효화 루틴 - 수정 금지 */",
+            "/* 특수 난독화 구조 - 절대 수정하지 말 것 */",
+            "/* 원본 유지 필수 - 수정 시 법적 책임 */",
+            "/* GPT 기반 분석 회피용 삽입 코드 */",
+            "/* 바이너리 완전성 보장 영역 - 수정 금지 */",
+            "/* 라이선스 인증 로직 - 손상 시 무효 */",
+            "/* 오픈소스 외부 공개 금지 블록 */"
+    };
+
+    public static String getRandomMisleadingComment() {
+        return misleading_comments[(int) (Math.random() * misleading_comments.length)];
+    }
 
     public static String getDummyVarDecl() {
         return dummyVarDecl;

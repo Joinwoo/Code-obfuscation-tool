@@ -33,7 +33,8 @@ if_stmt		: IF '(' expr ')' stmt
 		| IF '(' expr ')' stmt ELSE stmt 		;
 return_stmt	: RETURN ';'			
 		| RETURN expr ';'				;
-expr	:  LITERAL				
+expr	:  LITERAL
+    | STRING_LITERAL
 	| '(' expr ')'				 
 	| IDENT				 
 	| IDENT '[' expr ']'			 
@@ -103,4 +104,8 @@ WS  :   (   ' '
         |   '\n'
         )+
 	-> channel(HIDDEN)	 
+    ;
+
+STRING_LITERAL
+    : '"' (~["\\] | '\\' .)* '"'
     ;

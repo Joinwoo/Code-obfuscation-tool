@@ -1,40 +1,25 @@
-int main()
-{
-    int a = 5;
-    int b = 10;
-    int c[3];
-    c[0] = 1;
-    c[1] = 2;
-    c[2] = 3;
-    if(a < b)
-    {
-        a = a + 1;
-    }
-    else
-    {
-        b = b - 1;
-    }
-    while(a < 10)
-    {
-        a = a + 1;
-        if(a == b)
-        {
-            return 0;
+int main() {
+    int count = 0;
+    int even_gt_2 = 0;
+    int odd_gt_2 = 0;
+    int value = 0;
+
+    while (count < 10000000) {
+        value = count % 10;
+        if (value > 2) {
+            if (value % 2 == 0) {
+                even_gt_2 = even_gt_2 + 1;
+            } else {
+                odd_gt_2 = odd_gt_2 + 1;
+            }
         }
+
+        count = count + 1;
     }
+
+    printf("10_000_000회 반복 중 조건 만족 횟수:\n");
+    printf("- value > 2 이면서 짝수: %d회\n", even_gt_2);
+    printf("- value > 2 이면서 홀수: %d회\n", odd_gt_2);
+
     return 0;
-}
-
-int add(int x, int y)
-{
-    int result;
-    result = x + y;
-    return result;
-}
-
-void printSum()
-{
-    int sum;
-    sum = add(5, 10);
-    return;
 }
